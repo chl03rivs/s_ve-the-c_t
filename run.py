@@ -189,7 +189,7 @@ def main():
     """
     Runs the entire application
     """
-    # roll_intro()
+    roll_intro()
     game_choice()
 
 main()
