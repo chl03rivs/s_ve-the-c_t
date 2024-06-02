@@ -44,6 +44,7 @@ rules = """
          So, choose carefully.
         """
 
+
 class Player:
     """
     Player class to keep track of player status
@@ -59,6 +60,7 @@ class Player:
         return self.lives_left
         print("Wrong answer! The cat has lost a life @__@ !!")
 
+
 class GameSettings:
     """
     Game mode and difficulty options
@@ -66,7 +68,7 @@ class GameSettings:
     """
     def __init__(self):
         self.modes = ['mystery word', 'mystery sentence']
-        self.diffs = ['easy','medium','hard']
+        self.diffs = ['easy', 'medium', 'hard']
         self.game_mode = ''
         self.game_diff = ''
 
@@ -78,7 +80,7 @@ class GameSettings:
 
         print(f"You have chosen the {self.game_mode} game mode!")
         return self.game_mode
-    
+
     def choose_diff(self, value):
         if value == '1':
             self.game_diff = self.diffs[0]
@@ -86,7 +88,7 @@ class GameSettings:
             self.game_diff = self.diffs[1]
         elif value == '3':
             self.game_diff = self.diffs[2]
-        
+
         print(f"You have chosen the {self.game_diff} difficulty!")
         return self.game_diff
 
@@ -103,7 +105,7 @@ def roll_intro():
 
     while True:
         skip = input("Do you want to read the rules? Y/N\n>>\n")
-    
+
         if input_validation(skip):
             if skip in answer_yes:
                 print(rules)
@@ -135,7 +137,7 @@ def game_choice():
             if game_mode:
                 print("Choice saved.")
                 break
-    
+
     while True:
         Player.progress = progress_bar[3]
         # choice of game difficulty
@@ -149,9 +151,47 @@ def game_choice():
                 print("Choice saved.")
                 break
 
-
     Player.setting = (settings.game_mode, settings.game_diff)
-    print(f"You are now proceding into\na game with these settings: {Player.setting}")
+    print(f"You are now proceding into a game with these settings: {Player.setting}")
+
+    if settings.game_mode == 'mystery word':
+        hangman_word()
+    elif settings.game_mode == 'mystery sentence':
+        hangman_sentence()
+
+
+def hangman_word():
+    """
+    Generates a random word
+    Word length is based on Player.setting
+    """
+    mystery_word = ''
+
+    if Player.setting == ('mystery word', 'easy'):
+        mystery_word = wrd.word(word_min_length=3, word_max_length=5).upper()
+    elif Player.setting == ('mystery word', 'medium'):
+        mystery_word = wrd.word(word_min_length=5, word_max_length=7).upper()
+    elif Player.setting == ('mystery word', 'hard'):
+        mystery_word = wrd.word(word_min_length=8, word_max_length=12).upper()
+
+    return mystery_word
+
+
+def hangman_sentence():
+    """
+    Generates a random sentence
+    Sentence complexity is based on Player.setting
+    """
+    mystery_sentence = ''
+
+    if Player.setting == ('mystery sentence', 'easy'):
+        mystery_sentence = s.bare_bone_sentence().upper()
+    elif Player.setting == ('mystery sentence', 'medium'):
+        mystery_sentence = s.simple_sentence().upper()
+    elif Player.setting == ('mystery sentence', 'hard'):
+        mystery_sentence = s.sentence().upper()
+
+    return mystery_sentence
 
 
 def input_validation(value):
@@ -192,5 +232,6 @@ def main():
     """
     roll_intro()
     game_choice()
+
 
 main()
