@@ -47,3 +47,16 @@ class Player:
         self.lives_left -= 1
         return self.lives_left
         print("Wrong answer! The cat has lost a life @__@ !!")
+
+def roll_intro():
+    """
+    Provides the user with an intro of the game with logo and asks if they want to read the rules before proceding to game_choice()
+    """
+    Player.progress = progress_bar[0]
+
+    print(logo)
+    print('Welcome to SAVE THE CAT! A terminal-based "hangman" game.')
+
+    skip = input("Do you want to read the rules? Y/N (No will skip to lvl selection)\n")
+
+roll_intro()
