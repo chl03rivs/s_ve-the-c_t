@@ -1,6 +1,7 @@
 # module to generate random words and sentences
 from wonderwords import RandomWord
 from wonderwords import RandomSentence
+
 # import ASCII art from visuals.py
 from visuals import logo
 from visuals import drowning_cat
