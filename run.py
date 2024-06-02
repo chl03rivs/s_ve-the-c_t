@@ -32,3 +32,18 @@ progress_bar = {
     6: 'replay',
     7: 'end'
 }
+
+class Player:
+    """
+    Player class to keep track of player status
+    """
+    full_health = 9
+    lives_left = 9
+    progress = progress_bar[0]
+    setting = () #empty tuple that will hold game mode and difficulty
+    guesses = [] #empty list to contain the user's guesses
+
+    def lose_life(self):
+        self.lives_left -= 1
+        return self.lives_left
+        print("Wrong answer! The cat has lost a life @__@ !!")
