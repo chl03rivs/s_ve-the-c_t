@@ -20,7 +20,7 @@ answer_no = ['no', 'NO', 'N', 'n', 'No', 'nO', 'nah']
 # creates a list of uppercase letters of the alphabet
 # used to validate user guesses
 var = 'A'
-alphabet = [(chr(ord(var)+i)) for i in range(26)]
+alphabet = {(chr(ord(var)+i)) for i in range(26)}
 
 # dictionary holding the different game stages
 progress_bar = {
@@ -192,6 +192,49 @@ def hangman_sentence():
         mystery_sentence = s.sentence().upper()
 
     return mystery_sentence
+
+
+def get_user_guess(mystery):
+    """
+    Displays state of current mystery word/sentence
+
+    Prompts the user's guess only while they have lives/guesses remaining
+    Also handles validation of guess input
+    """
+    letters = set(mystery)
+    current_mystery = [letter if letter in Player.guesses else '_' for letter in mystery]
+
+    while Player.lives_left > 0 and len(letters) > 0:
+        print(drowning_cat[Player.lives_left])
+        print(f"You have {lives_left} lives left.\n")
+        print(f"You have already used these letters: ' '.join(Player.guesses)\n")
+        print(f"The cat is anxious...\n{''.join(current_mystery)}")
+
+        guess = input("Enter a guess:\n").upper()
+        
+        if guess in alphabet - Player.guesses:
+            Player.guesses.add(guess)
+        elif guess in player.guesses:
+            print("You've already guessed this one. \n Try a different letter please")
+        else:
+            print("Not a valid answer...\nPlease only use single letters!\n")
+            continue
+
+        if guess in letters:
+            letters.remove(guess)
+            print("Well done! You found a letter!\n")
+        else:
+            Player.lose_life()
+
+        current_mystery = [letter if letter in Player.guesses else '_' for letter in mystery]
+
+        if len(letters) == 0:
+            print(victory)
+            print(f"Congratulations!\nYou found all the letters:\n{mystery}")
+        else:
+            print(game_over)
+            print(f"Game Over...\nYou were so close :(")
+            print(f"Your mystery was: {mystery}")
 
 
 def input_validation(value):
