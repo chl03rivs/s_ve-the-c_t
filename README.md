@@ -1,5 +1,7 @@
 # S_ve the c_t  
 
+![Save the cat](./assets/images/logo.JPG)
+
 S_VE THE C_T is a terminal-based "hangman" game variation, with a dark(er) twist. 
 
 To save the cat, the user has to guess a word/sentence, one letter at a time. Each mistake comes at a price...
@@ -23,8 +25,6 @@ To save the cat, the user has to guess a word/sentence, one letter at a time. Ea
 	- [Code Validation](#code-validation)
 	- [Manual Testing](#manual-testing)
 - [Bugs](#bugs)
-	- [Bugs Fixed](#bugs-fixed)
-	- [Known Bugs](#known-bugs)
 - [Deployment steps](#deployment-steps)
 	- [GitHub](#github)
 	- [Cloning and forking](#cloning-and-forking)
@@ -67,22 +67,86 @@ The main goals of this app were as follows:
 
 ---
 ##   Design  
-Describe the design process briefly and the vibe you're going for
+As this project focused on applying my newly acquired Python knowledge to make a terminal-based app, there wasn't as much of a design process as with previous projects. It also meant that whatever design I wanted to create, it would need to fit within the 80-character wide terminal screen!
+
+The biggest part of the design was coming up with the functions, classes, variables, etc. needed for the program.
+
+I knew that I wanted something different than the typical hangman as the main theme of this app, though. 
 
 ### Flowchart
+While hangman is a pretty simple game at its core, it was harder than planned for me to come up with a flowchart that represented its mechanics accurately.
+
+Typically, we play this game with pen and paper, and greatly underestimate the numerous small steps that our brains take 
+
+<details><summary>Flowchart image</summary>
+
+![Flowchart](./assets/images/flowchart.webp)
+
+</details>
 
 ### Imagery used 
+Beyond the awful connotations/history behind it, I wanted to have something a bit more creative than a stick man on an already bare terminal.
 
+A drowning cat is not necessarily the merriest of concepts, either. But the one that I had in mind (and designed) was perfect to show a gradual, but dramatic, illustration of the dire situation the user is faced with:
+
+![ASCII cat](./assets/images/9-lives.JPG)
+
+You can find the rest of the ASCII visuals used on this project in its `visuals.py` file:
+
+* the `drowning_cat` dictionnary holds the variations of the cat slowly sinking in ('lives': 'art') pairs;
+* then we have the logo and victory visuals which use cats as a banner and text in a representation of keyboard keys;
+* then we have the game over banner with the same text style but with a banner made using waves (to symbolize the drowning);
+* victory and game over also come with a cat illustration:
+	* wet cat laying on the ground after being saved
+	wet cat turned into an angelic ghost as he ascends to heaven.
 
 ----
 ## Features  
 Hangman is a game in which players try to guess what letters are in a word before a complete picture of a man getting hanged appears. With each wrong guess, one element of the man (and the gruesome contraption that hangs him) is added.
 
+S_ve the c_t keeps this mechanic, but as noted before, our cat is slowly drowning in waves (~) of water instead.
+
+Let's have a look at the main features of this app:
+
+**Player and GameSettings**
 
 
-In the features section you want to list all the features of your project. This is a great place to describe how each part of your site works. Its highly recommended to use screenshots here of all the features so the reader can 
-easily identify the feature in question.
+**User input**
 
+User input is collected in four different places:
+
+* At the start of the program (in the `roll_intro` function), to see if they want to skip or read the rules;
+![](./assets/images/skip_rules.JPG)
+* During the `game_choice` function's execution, where they need to pick a game mode and game difficulty;
+![](./assets/images/game_choice.JPG)
+* During the `get_user_guess` function's execution, where the player is prompted to enter their guess;
+* At the end of the game (victory/game over), where the player is asked if they want to play again
+![](./assets/images/game_over.JPG)
+
+**Error handling**
+
+Because this game relies on user input, it is crucial to have good validation and error handling in place. The user needs to receive feedback if they enter a wrong character or lose a life, for example.
+
+The `input_validation` function handles three types of inputs/possible errors. Using `if statements`, it checks the position of the player on our progress bar to decide which validation rule to execute:
+
+* for the stages where a yes/no answer is required from the user:
+	* we created the global lists `answer_yes` and `answer_no` which contain variations of Y/N that a user could enter in the terminal
+	![](./assets/images/error-1.JPG)
+* for the stages where a numerical value is required from the user, we have two separate `elif`s: 
+	* one for questions that only accept 1/2, and another for those that take 1/2/3:
+	![](./assets/images/error-2.JPG)
+
+And then, when it comes to the guessing stage, our input validation is built-in the `game_choice` function:
+
+* it compares the user input with the alphabet to see if it's a correct input;
+![](./assets/images/error-3.JPG)
+* it checks if the input letter is already present in the player's guesses;
+* it also checks if the input letter is present in the mystery word/sentence;
+* and uses the Player class' method to remove a life if the input is an incorrect answer
+![](./assets/images/wrong_answer.JPG)
+![](./assets/images/good_guess.JPG)
+
+****
 
 ### Future Features
 Here are a few of the ideas that I thought of while working on this project and may implement in the future, as I deepen my understanding of Python and broaden my programming skills.
@@ -107,11 +171,25 @@ This project was created using the [Python language](https://docs.python.org/3/)
 
 ---
 ## Testing  
-describe testing plan and experience
 
-### Code Validation 
+### Code Validation
+As this is a Python-centric project, the [PEP8 validator](https://pep8ci.herokuapp.com) was used to test the program (`run.py`):
 
-### Manual testing  
+* Once I corrected the extra whitespaces and missing lines, no errors were found:
+
+![PEP8 validation](./assets/images/pep8_check.JPG)
+
+### Manual testing
+The code that I wrote for this project was planned in advance, and tested throughout the whole creation process.
+
+* I used [Google Sheets](https://docs.google.com/spreadsheets/) to plan out my game flow, program functions and other crucial elements;
+* Before I created the repository, I had ran my main functions through the [Python tutor tool](https://pythontutor.com) to check their logic;
+* While building the project via [Gitpod](https://gitpod.io/), I made use of the terminal and virtual environment to test my code as it slowly took shape;
+* Once I had enough "bones" to work with, I proceeded with an early deployment to Heroku to make sure that I was seeing the correct output of my work;
+
+Until the end of the development, I continued with these methods of testing my work. I periodically ran my `run.py` file in the PEP8 validator and cleared my code of trailing spaces, missing lines, etc.
+
+Maintaining these routine checks allowed me to spot errors in my code (notably, indentations and misplaced keywords) before they became real issues.
 
 ---
 ## Bugs 
