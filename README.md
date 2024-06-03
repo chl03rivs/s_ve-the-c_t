@@ -11,10 +11,10 @@ To save the cat, the user has to guess a word/sentence, one letter at a time. Ea
 - [User Experience](#user-experience)
 	- [Target audience](#target-audience)
 	- [User Stories](#user-stories)
-	- [Site Aims](#site-aims)
+	- [App Aims](#app-aims)
 - [Design](#design)
     - [Flowchart](#flowchart)
-	- [Site Structure](#site-structure)
+	- [App Structure](#app-structure)
 	- [Imagery Used](#imagery-used)
 - [Features](#features)
 	- [Future Features](#future-features)
@@ -37,33 +37,33 @@ To save the cat, the user has to guess a word/sentence, one letter at a time. Ea
 Now, let's have a look at our target users and their needs!
 
 ### Target Audience
-Describe the site's target audience, who is it for? who would look for it/benefit from it? etc.
+This game, in its current state, has a broad audience that it can appeal to. In order to play, you would need to know the letters of the alphabet, how to read/spell in English and use a computer.
+
+Hangman is a game that most of us have played as a child. It is worth noting, however, that due to its gore/graphic theme, it may not be suited for young children. S_ve the c_t is no different and therefore, might be more suited for ages 7+.
 
 ### User Stories
 
 **First-time user**
-*  I want...
-* 
-* 
-* 
-* 
+* I need an easy-to-understand introduction to the game and its rules
+* I want to be able to choose the level of difficulty of the game
+* I need to be aware of my life count
+* I need to see a list of the guesses I have already made so I do not repeat them
+* I need to receive clear feedback if I enter a wrong type of data and have a chance to try again without having to restart the game
+* I need a clear indication if my guess was right or wrong
+* I need to know when the game is started/over
+* I want to be shown the correct answers if I game over
+* I need to have the option to play again after a game if I want to
 
 **Returning user**
-*  I want...
-* 
-* 
-* 
-* 
+*  I want to be able to skip the rules in the intro because I already know them
+* I do not want to get the same mystery word or sentence to guess
 
-**Frequent user**(optional)
-*  I want...
-* 
-* 
-* 
-* 
+### App Aims
+The main goals of this app were as follows:
 
-### Site Aims
-describe the goals of the website
+* to entertain the user;
+* to challenge the user's vocabulary and patter recognition skills;
+* to have straightforward, enjoyable interface and mechanics
 
 ---
 ##   Design  
@@ -101,12 +101,9 @@ I looked into the possibility to trigger a screen clear using the OS module. Cle
 
 Snce this did not satisfy my vision for the game, I want to look into other options to style the terminal and make it feel more like a conversation _with_ the user.
 
-
-
-
 ---
 ## Technologies used
-Describe languages used, wireframes, frameworks, librairies, etc.
+This project was created using the [Python language](https://docs.python.org/3/).
 
 ---
 ## Testing  
@@ -118,11 +115,23 @@ describe testing plan and experience
 
 ---
 ## Bugs 
-Bugs are an inherent part of the creative process that is programming. Here are the ones I encountered while working on Title:
+Bugs are an inherent part of the creative process that is programming. In Python, indentation plays a crucial role in determining scope and having an extra space in the wrong place can easily wreck the app flow.
 
-###  Bugs Fixed  
+One issue that surfaced while working on this project was related to the `get_user_guess` function. This function contains a loop that handles prompting the user for a guess while the user still has lives left.
 
-### Known Bugs  
+The last component of this function is an _if statement_ that handles the victory/game over mechanics:
+
+`if len(letters) == 0:
+        print(victory)
+        player.progress = progress_bar[5]
+        print(f"Congratulations!\nYou found all the letters:\n{mystery}")
+else:
+    print(game_over)
+    player.progress = progress_bar[6]
+    print(f"Game Over...\nYou were so close :(")
+    print(f"Your mystery was: {mystery}")`
+
+A wrong indent was causing the game_over visuals to be printed to the terminal after every single wrong guess from the user. To fix it, I simply needed to remove this indent, so the statement would no longer be part of the loop.
 
 ----
 ## Deployment Steps

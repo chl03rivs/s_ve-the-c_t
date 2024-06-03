@@ -113,8 +113,8 @@ def roll_intro():
         if input_validation(player, skip):
             if skip in answer_yes:
                 print(rules)
-                break
                 print("Loading game...")
+                break
             elif skip in answer_no:
                 print("Loading game...")
                 break
@@ -305,23 +305,23 @@ def input_validation(player, value):
                            progress_bar[6], progress_bar[7]]:
         try:
             if value not in answer_yes and value not in answer_no:
-                raise ValueError(f"You must answer yes or no.\nYou entered {value}.")
+                raise ValueError(f"You must answer yes or no.\nYou entered {value}\n")
         except ValueError as e:
-            print(f"Invalid data: {e}. Please try again.\n")
+            print(f"Invalid data: {e}\nPlease try again.\n")
             return False
     elif player.progress in progress_bar[2]:    # for the game settings choices
         try:
             if (value != '1') and (value != '2'):
                 raise ValueError(f"You must enter a number(1 or 2).\nYou entered {value}.")
         except ValueError as e:
-            print(f"Invalid data: {e}. Please try again.\n")
+            print(f"Invalid data: {e}\nPlease try again.\n")
             return False
     elif player.progress in progress_bar[3]:
         try:
             if (value != '1') and (value != '2') and (value != '3'):
-                raise ValueError(f"You must enter a number (1, 2 or 3).\nYou entered {value}.")
+                raise ValueError(f"You must enter a number (1, 2 or 3).\nYou entered {value}\n")
         except ValueError as e:
-            print(f"Invalid data: {e} Please try again.\n")
+            print(f"Invalid data: {e}\nPlease try again.\n")
             return False
     return True
 
