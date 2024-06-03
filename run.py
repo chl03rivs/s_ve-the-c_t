@@ -167,6 +167,8 @@ def game_choice(player):
 
     player.setting = [settings.game_mode, settings.game_diff]
     print(f"Loading a game with these settings: {player.setting}")
+    print('...\n...\n...\n...\n...')
+    get_user_guess(player)
 
 
 def hangman_word(player):
@@ -335,7 +337,6 @@ def main():
     Runs the entire application
     """
     player = roll_intro()
-    get_user_guess(player)
 
 
 main()
