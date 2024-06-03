@@ -49,7 +49,6 @@ class Player:
     """
     Player class to keep track of player status
     """
-    full_health = 9
     lives_left = 9
     progress = progress_bar[0]
     setting = []    # will hold game mode and difficulty
@@ -241,6 +240,45 @@ def get_user_guess(player):
             print(game_over)
             print(f"Game Over...\nYou were so close :(")
             print(f"Your mystery was: {mystery}")
+    
+    replay(player)
+
+def reset_game(player):
+    """
+    Handles the return to default in case of replay
+    Sends the user back to the intro
+    """
+    player.lives_left = 9
+    player.guesses = set()
+    player.setting = []
+
+    roll_intro()
+
+def replay(player):
+    """
+    Prompts the user for a replay
+    """
+    player.progress = progress_bar[7]
+    print("Would you like to play again? Y/N")
+
+    while True:
+        replay = input(">>\n")
+
+        if input_validation(player, replay):
+            if replay in answer_yes:
+                print("Understood! Just a sec.")
+                print("...")
+                print("Turning back time...")
+                print("...")
+                print("...")
+                reset_game(player)
+                break
+            elif replay in answer_no:
+                print("Oh..\nOkay...")
+                print("See you next time!")
+                print("You can go now...")
+                print("Bye...????")
+                break
 
 
 def input_validation(player, value):
@@ -282,6 +320,5 @@ def main():
     player = roll_intro()
     game_choice(player)
     get_user_guess(player)
-
 
 main()
