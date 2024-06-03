@@ -287,14 +287,16 @@ def replay(player):
                 print("Understood! Just a sec.")
                 print("...")
                 print("Turning back time...")
-                print("...")
-                print("...")
+                print('...\n...\n...\n...\n...')
+                print('...\n...\n...\n...\n...')
                 reset_game(player)
                 break
             elif replay in answer_no:
                 print("Oh..\nOkay...")
                 print("See you next time!")
+                print('...\n...\n...\n...\n...')
                 print("You can go now...")
+                print('...\n...\n...\n...\n...')
                 print("Bye...????")
                 player.progress = progress_bar[8]
                 break
