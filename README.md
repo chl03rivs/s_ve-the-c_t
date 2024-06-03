@@ -75,11 +75,11 @@ I knew that I wanted something different than the typical hangman as the main th
 ### Flowchart
 While hangman is a pretty simple game at its core, it was harder than planned for me to come up with a flowchart that represented its mechanics accurately.
 
-Typically, we play this game with pen and paper, and greatly underestimate the numerous small steps that our brains take 
+Typically, we play this game with pen and paper, and greatly underestimate the numerous small steps that our brains take to make everything work.
 
 <details><summary>Flowchart image</summary>
 
-![Flowchart](./assets/images/flowchart.webp)
+![Flowchart](./assets/images/flowchart.jpg)
 
 </details>
 
@@ -132,7 +132,7 @@ We have two separate functions that each handle the random generation of a word 
 	* 9 lives (full health):
 	![](./assets/images/9-lives.JPG)
 	* Almost drowning:
-	![](./assets/images/almost_drowning.JPG)
+![](./assets/images/almost_drowning.JPG)
 * The `get_user_guess` function:
 	* calls the correct hangman function based on the player's game settings;
 	* prompts the user for the letter they would like to guess;
