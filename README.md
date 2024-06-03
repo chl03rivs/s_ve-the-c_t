@@ -16,7 +16,6 @@ To save the cat, the user has to guess a word/sentence, one letter at a time. Ea
 	- [App Aims](#app-aims)
 - [Design](#design)
     - [Flowchart](#flowchart)
-	- [App Structure](#app-structure)
 	- [Imagery Used](#imagery-used)
 - [Features](#features)
 	- [Future Features](#future-features)
@@ -66,7 +65,7 @@ The main goals of this app were as follows:
 * to have straightforward, enjoyable interface and mechanics
 
 ---
-##   Design  
+##   Design
 As this project focused on applying my newly acquired Python knowledge to make a terminal-based app, there wasn't as much of a design process as with previous projects. It also meant that whatever design I wanted to create, it would need to fit within the 80-character wide terminal screen!
 
 The biggest part of the design was coming up with the functions, classes, variables, etc. needed for the program.
@@ -108,9 +107,6 @@ S_ve the c_t keeps this mechanic, but as noted before, our cat is slowly drownin
 
 Let's have a look at the main features of this app:
 
-**Player and GameSettings**
-
-
 **User input**
 
 User input is collected in four different places:
@@ -120,8 +116,28 @@ User input is collected in four different places:
 * During the `game_choice` function's execution, where they need to pick a game mode and game difficulty;
 ![](./assets/images/game_choice.JPG)
 * During the `get_user_guess` function's execution, where the player is prompted to enter their guess;
-* At the end of the game (victory/game over), where the player is asked if they want to play again
+* At the end of the game (victory/game over), where the player is asked if they want to play again:
+	* yes - calls a function that resets all game settings and player status, and brings the player back to the intro;
+	* no - brings the game to an end.
 ![](./assets/images/game_over.JPG)
+
+**Hangman mechanics**
+
+We have two separate functions that each handle the random generation of a word or sentence based on the game mode and difficulty that the player chose.
+
+* They use the methods from the imported classes of the `Wonderwords` module.
+* Longer/more complex words/sentences are generated based on the difficulty level chosen:
+![](./assets/images/mode_diff.JPG)
+* Using a dictionary from `visuals.py`, we update the image of the cat based on the player's remaining lives:
+	* 9 lives (full health):
+	![](./assets/images/9-lives.JPG)
+	* Almost drowning:
+	![](./assets/images/almost_drowning.JPG)
+* The `get_user_guess` function:
+	* calls the correct hangman function based on the player's game settings;
+	* prompts the user for the letter they would like to guess;
+	* displays the current state of the mystery word/sentence by replacing each letter with an underscore;
+	* it takes care of revealing the mystery letters when the player's guess is correct
 
 **Error handling**
 
@@ -136,7 +152,7 @@ The `input_validation` function handles three types of inputs/possible errors. U
 	* one for questions that only accept 1/2, and another for those that take 1/2/3:
 	![](./assets/images/error-2.JPG)
 
-And then, when it comes to the guessing stage, our input validation is built-in the `game_choice` function:
+And then, when it comes to the guessing stage, our input validation is built-in the `get_user_guess` function:
 
 * it compares the user input with the alphabet to see if it's a correct input;
 ![](./assets/images/error-3.JPG)
@@ -152,6 +168,7 @@ And then, when it comes to the guessing stage, our input validation is built-in 
 Here are a few of the ideas that I thought of while working on this project and may implement in the future, as I deepen my understanding of Python and broaden my programming skills.
 
 **Quiz**
+
 In order to make the game a bit more rewarding and educational, it would be interesting to have a higher difficulty level where we add a vocabulary check _after_ the user has guessed all the letters.
 
 In this mode, victory can only be achieved by choosing the correct definition/synonym of the word.
@@ -159,6 +176,7 @@ In this mode, victory can only be achieved by choosing the correct definition/sy
 Taking it up another notch, we could also have a level with a second language. Instead of simply being quizzed on the meaning of a word/sentence, we could be asked to translate it!
 
 **Style the terminal**
+
 In order to increase the replayability of the game and the user experience, I would like to implement a typing effect that would slow down the rate at which data is printed.
 
 I looked into the possibility to trigger a screen clear using the OS module. Clearing the terminal after each stage of the game seems unpractical and also removes the option for the user to go over what was shared before.
@@ -231,7 +249,7 @@ The steps taken were as follows:
 To view the cloning options available on Github:
 
 1. Log in (or sign up) to [Github](https://github.com).
-2. Find the repository for this project from [my profile](https://github.com/chl03rivs) in [night-owlzzz](https://github.com/chl03rivs).
+2. Find the repository for this project from [my profile](https://github.com/chl03rivs) in [s_ve-the-c_t](https://github.com/chl03rivs/s_ve-the-c_t).
 3. Click on the blue **<> Code** button with the downward arrow.
 
 If you wish to download a copy of this program and run it on your machine, you can do so  by choosing the **Download ZIP** options. Follow the usual steps of your machine to unzip the file and run it in your preferred software.
@@ -249,23 +267,24 @@ Creativity and originality do not mean standing alone and figuring it all out on
 
 **Documents consulted**
 
-- cc
-- etc.
+- [Wonderwords package/documentation](https://pypi.org/project/wonderwords/) -allowed me to quickly set up the random word and sentence generators
+- [This article from PythonPool](https://www.pythonpool.com/python-alphabet/) - helped me understand how to initialize a list with the alphabet
 
 **Tutorials referenced**
 
-- 
--
+- [Tutorial by Kylie Ying](https://youtu.be/cJJTnI22IF8?si=LJNLZAjF0wJXX5WI) - helped inspire the structure of my first Python program!
 
 **Other**
 
+- [The ASCII Art website](https://www.asciiart.eu/) - helped me generate ASCII banners from text quickly!
 
 ## Credits  
-credit where credit is due
+Credit where credit is due
 
-- who made the images
-- any borrowed code, etc.
+- The artists whose art I borrowed from [the ASCII Art website](https://www.asciiart.eu/animals/cats) for the cat illustrations:
+	* Game over cat from Felix Lee (tweaked by me)
+	* Victory cat from _Unknown_ :(
 
 ## Acknowledgements
 
-As always, I want to thank Code Institute for the great learning materials they provided on XX, and my precious partner, Billy, for his undying love & support ♥
+As always, I want to thank Code Institute for the great learning materials they provided on Python, and my precious partner, Billy, for his undying love & support ♥
