@@ -114,9 +114,13 @@ def roll_intro():
             if skip in answer_yes:
                 print(rules)
                 print("Loading game...")
+                print('...\n...\n...\n...\n...')
+                game_choice(player)
                 break
             elif skip in answer_no:
                 print("Loading game...")
+                print('...\n...\n...\n...\n...')
+                game_choice(player)
                 break
 
     return player    # return the instance so it can be used later
@@ -331,7 +335,6 @@ def main():
     Runs the entire application
     """
     player = roll_intro()
-    game_choice(player)
     get_user_guess(player)
 
 
