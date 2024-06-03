@@ -117,7 +117,7 @@ def roll_intro():
                 print("Loading game...")
                 break
 
-    return player # return the instance so it can be used later
+    return player    # return the instance so it can be used later
 
 
 def game_choice(player):
@@ -127,12 +127,15 @@ def game_choice(player):
     """
     settings = GameSettings()
 
-    print("Before we begin, you must choose the game mode & difficulty level.\nThe higher the level the more letters you will have to guess before the cat drowns!")
+    print("Before we begin, you must choose the game mode & difficulty level.")
+    print("Sentences will be harder than words.")
+    print("The higher difficullties mean more letters to guess.")
 
     while True:
         player.progress = progress_bar[2]
         # choice of game mode
-        print("Please choose a game mode by entering 1 or 2 on your keyboard:\nMystery Word [1]\nor\nMystery Sentence [2]")
+        print("Please choose a game mode by entering 1 or 2 on your keyboard.")
+        print("Mystery Word: 1\nor\nMystery Sentence: 2")
 
         p_mode = input('>>\n')
 
@@ -145,7 +148,8 @@ def game_choice(player):
     while True:
         player.progress = progress_bar[3]
         # choice of game difficulty
-        print("Please choose a game difficulty by entering 1, 2 or 3 on your keyboard:\nEasy[1],\nMedium[2],\nHard[3]")
+        print("Now, choose a game difficulty, please.")
+        print("Easy: 1, \nMedium: 2, \nHard: 3")
 
         p_diff = input('>>\n')
 
@@ -156,7 +160,7 @@ def game_choice(player):
                 break
 
     player.setting = [settings.game_mode, settings.game_diff]
-    print(f"You are now proceding into a game with these settings: {player.setting}")
+    print(f"Loading a game with these settings: {player.setting}")
 
 
 def hangman_word(player):
@@ -200,27 +204,28 @@ def get_user_guess(player):
     Prompts the user's guess only while they have lives/guesses remaining
     Also handles validation of guess input
     """
-    mystery = None # 
+    mystery = None   # initialize the variable
     if player.setting[0] == 'mystery word':
         mystery = hangman_word(player)
     elif player.setting[0] == 'mystery sentence':
         mystery = hangman_sentence(player)
 
     letters = set(mystery)
-    current_mystery = [letter if letter in player.guesses or letter == ' ' else '_' for letter in mystery]
+    current_mystery = [letter if letter in player.guesses
+                       or letter == ' ' else '_' for letter in mystery]
 
     while player.lives_left > 0 and len(letters) > 0:
-        print(drowning_cat[player.lives_left])
         print(f"You have {player.lives_left} lives left.\n")
-        print(f"You have already used these letters: {' '.join(player.guesses)}\n")
-        print(f"The cat is anxious...\n{''.join(current_mystery)}")
+        print(f"Previous guesses: {' '.join(player.guesses)}\n")
+        print(drowning_cat[player.lives_left])
 
+        print(f"The cat is anxious...\n{''.join(current_mystery)}")
         guess = input("Enter a guess:\n").upper()
-        
+
         if guess in alphabet - player.guesses:
             player.guesses.add(guess)
         elif guess in player.guesses:
-            print("You've already guessed this one. \n Try a different letter please")
+            print("Already guessed! Try a different letter please")
         else:
             print("Not a valid answer...\nPlease only use single letters!\n")
             continue
@@ -231,7 +236,8 @@ def get_user_guess(player):
         else:
             player.lose_life()
 
-        current_mystery = [letter if letter in player.guesses or letter == ' ' else '_' for letter in mystery]
+        current_mystery = [letter if letter in player.guesses
+                           or letter == ' ' else '_' for letter in mystery]
 
         if len(letters) == 0:
             print(victory)
@@ -240,8 +246,9 @@ def get_user_guess(player):
             print(game_over)
             print(f"Game Over...\nYou were so close :(")
             print(f"Your mystery was: {mystery}")
-    
+
     replay(player)
+
 
 def reset_game(player):
     """
@@ -253,6 +260,7 @@ def reset_game(player):
     player.setting = []
 
     roll_intro()
+
 
 def replay(player):
     """
@@ -299,14 +307,14 @@ def input_validation(player, value):
     elif player.progress in progress_bar[2]:    # for the game settings choices
         try:
             if (value != '1') and (value != '2'):
-                raise ValueError(f"You must enter a number.\nOnly 1 or 2 are accepted.\nYou entered {value}.")
+                raise ValueError(f"You must enter a number(1 or 2).\nYou entered {value}.")
         except ValueError as e:
             print(f"Invalid data: {e}, please try again.\n")
             return False
     elif player.progress in progress_bar[3]:
         try:
             if (value != '1') and (value != '2') and (value != '3'):
-                raise ValueError(f"You must enter a number.\nOnly 1, 2 or 3 are accepted.\nYou entered {value}.")
+                raise ValueError(f"You must enter a number (1, 2 or 3).\nYou entered {value}.")
         except ValueError as e:
             print(f"Invalid data: {e}, please try again.\n")
             return False
@@ -320,5 +328,6 @@ def main():
     player = roll_intro()
     game_choice(player)
     get_user_guess(player)
+
 
 main()
