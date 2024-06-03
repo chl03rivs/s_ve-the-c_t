@@ -208,12 +208,12 @@ def get_user_guess(player):
         mystery = hangman_sentence(player)
 
     letters = set(mystery)
-    current_mystery = [letter if letter in player.guesses else '_' for letter in mystery]
+    current_mystery = [letter if letter in player.guesses or letter == ' ' else '_' for letter in mystery]
 
     while player.lives_left > 0 and len(letters) > 0:
         print(drowning_cat[player.lives_left])
         print(f"You have {player.lives_left} lives left.\n")
-        print(f"You have already used these letters: ' '.join(player.guesses)\n")
+        print(f"You have already used these letters: {' '.join(player.guesses)}\n")
         print(f"The cat is anxious...\n{''.join(current_mystery)}")
 
         guess = input("Enter a guess:\n").upper()
@@ -232,7 +232,7 @@ def get_user_guess(player):
         else:
             player.lose_life()
 
-        current_mystery = [letter if letter in player.guesses else '_' for letter in mystery]
+        current_mystery = [letter if letter in player.guesses or letter == ' ' else '_' for letter in mystery]
 
         if len(letters) == 0:
             print(victory)
