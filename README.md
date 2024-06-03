@@ -1,9 +1,10 @@
 # S_ve the c_t  
 
-Description of the project
-Mention title, type, main goal/tag line
+S_VE THE C_T is a terminal-based "hangman" game variation, with a dark(er) twist. 
 
-**[Link to live site ](x)**
+To save the cat, the user has to guess a word/sentence, one letter at a time. Each mistake comes at a price...
+
+**[View the live app here](https://save-the-cat-04e7dc8a4683.herokuapp.com)**
 
 ---
 ## Table of Contents
@@ -75,17 +76,33 @@ Describe the design process briefly and the vibe you're going for
 
 ----
 ## Features  
-How many are there, any innovation?
+Hangman is a game in which players try to guess what letters are in a word before a complete picture of a man getting hanged appears. With each wrong guess, one element of the man (and the gruesome contraption that hangs him) is added.
+
+
 
 In the features section you want to list all the features of your project. This is a great place to describe how each part of your site works. Its highly recommended to use screenshots here of all the features so the reader can 
 easily identify the feature in question.
 
 
 ### Future Features
-Share any ideas that will or might be implemented in the future
+Here are a few of the ideas that I thought of while working on this project and may implement in the future, as I deepen my understanding of Python and broaden my programming skills.
 
-- list
-- 
+**Quiz**
+In order to make the game a bit more rewarding and educational, it would be interesting to have a higher difficulty level where we add a vocabulary check _after_ the user has guessed all the letters.
+
+In this mode, victory can only be achieved by choosing the correct definition/synonym of the word.
+
+Taking it up another notch, we could also have a level with a second language. Instead of simply being quizzed on the meaning of a word/sentence, we could be asked to translate it!
+
+**Style the terminal**
+In order to increase the replayability of the game and the user experience, I would like to implement a typing effect that would slow down the rate at which data is printed.
+
+I looked into the possibility to trigger a screen clear using the OS module. Clearing the terminal after each stage of the game seems unpractical and also removes the option for the user to go over what was shared before.
+
+Snce this did not satisfy my vision for the game, I want to look into other options to style the terminal and make it feel more like a conversation _with_ the user.
+
+
+
 
 ---
 ## Technologies used

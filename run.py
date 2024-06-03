@@ -131,7 +131,7 @@ def game_choice(player):
 
     print("Before we begin, you must choose the game mode & difficulty level.")
     print("Sentences will be harder than words.")
-    print("The higher difficullties mean more letters to guess.")
+    print("Higher difficulties mean more letters to guess.")
 
     while True:
         player.progress = progress_bar[2]
@@ -241,15 +241,15 @@ def get_user_guess(player):
         current_mystery = [letter if letter in player.guesses
                            or letter == ' ' else '_' for letter in mystery]
 
-        if len(letters) == 0:
-            print(victory)
-            player.progress = progress_bar[5]
-            print(f"Congratulations!\nYou found all the letters:\n{mystery}")
-        else:
-            print(game_over)
-            player.progress = progress_bar[6]
-            print(f"Game Over...\nYou were so close :(")
-            print(f"Your mystery was: {mystery}")
+    if len(letters) == 0:
+        print(victory)
+        player.progress = progress_bar[5]
+        print(f"Congratulations!\nYou found all the letters:\n{mystery}")
+    else:
+        print(game_over)
+        player.progress = progress_bar[6]
+        print(f"Game Over...\nYou were so close :(")
+        print(f"Your mystery was: {mystery}")
 
     replay(player)
 
@@ -307,21 +307,21 @@ def input_validation(player, value):
             if value not in answer_yes and value not in answer_no:
                 raise ValueError(f"You must answer yes or no.\nYou entered {value}.")
         except ValueError as e:
-            print(f"Invalid data: {e}, please try again.\n")
+            print(f"Invalid data: {e}. Please try again.\n")
             return False
     elif player.progress in progress_bar[2]:    # for the game settings choices
         try:
             if (value != '1') and (value != '2'):
                 raise ValueError(f"You must enter a number(1 or 2).\nYou entered {value}.")
         except ValueError as e:
-            print(f"Invalid data: {e}, please try again.\n")
+            print(f"Invalid data: {e}. Please try again.\n")
             return False
     elif player.progress in progress_bar[3]:
         try:
             if (value != '1') and (value != '2') and (value != '3'):
                 raise ValueError(f"You must enter a number (1, 2 or 3).\nYou entered {value}.")
         except ValueError as e:
-            print(f"Invalid data: {e}, please try again.\n")
+            print(f"Invalid data: {e} Please try again.\n")
             return False
     return True
 
