@@ -49,15 +49,17 @@ class Player:
     """
     Player class to keep track of player status
     """
-    lives_left = 9
-    progress = progress_bar[0]
-    setting = []    # will hold game mode and difficulty
-    guesses = set()    # will contain the user's guesses
+    def __init__(self):
+        self.lives_left = 9
+        self.progress = progress_bar[0]
+        self.setting = []    # will hold game mode and difficulty
+        self.guesses = set()    # will contain the user's guesses
 
     def lose_life(self):
         self.lives_left -= 1
-        return self.lives_left
+        
         print("Wrong answer! The cat has lost a life @__@ !!")
+        return self.lives_left
 
 
 class GameSettings:
@@ -241,9 +243,11 @@ def get_user_guess(player):
 
         if len(letters) == 0:
             print(victory)
+            player.progress = progress_bar[5]
             print(f"Congratulations!\nYou found all the letters:\n{mystery}")
         else:
             print(game_over)
+            player.progress = progress_bar[6]
             print(f"Game Over...\nYou were so close :(")
             print(f"Your mystery was: {mystery}")
 
@@ -286,6 +290,7 @@ def replay(player):
                 print("See you next time!")
                 print("You can go now...")
                 print("Bye...????")
+                player.progress = progress_bar[8]
                 break
 
 
