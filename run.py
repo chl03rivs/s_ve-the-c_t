@@ -52,8 +52,8 @@ class Player:
     full_health = 9
     lives_left = 9
     progress = progress_bar[0]
-    setting = ()    # empty tuple that will hold game mode and difficulty
-    guesses = []    # empty list to contain the user's guesses
+    setting = []    # will hold game mode and difficulty
+    guesses = set()    # will contain the user's guesses
 
     def lose_life(self):
         self.lives_left -= 1
@@ -98,7 +98,10 @@ def roll_intro():
     Provides the user with an intro of the game with logo
     and asks if they want to read the rules before proceding to game_choice()
     """
-    Player.progress = progress_bar[0]
+    player = Player()
+
+    player.progress = progress_bar[0]  # Set player's progress to 'intro'
+    player.lives_left = 9  # Set player's initial lives to 9
 
     print(logo)
     print('Welcome to SAVE THE CAT! A terminal-based "hangman" game.')
@@ -106,7 +109,7 @@ def roll_intro():
     while True:
         skip = input("Do you want to read the rules? Y/N\n>>\n")
 
-        if input_validation(skip):
+        if input_validation(player, skip):
             if skip in answer_yes:
                 print(rules)
                 break
@@ -115,105 +118,108 @@ def roll_intro():
                 print("Loading game...")
                 break
 
+    return player # return the instance so it can be used later
 
-def game_choice():
+
+def game_choice(player):
     """
     Retrieves the game settings via user input
-    Player is prompted to choose mode and difficulty
+    The player is prompted to choose mode and difficulty
     """
     settings = GameSettings()
 
     print("Before we begin, you must choose the game mode & difficulty level.\nThe higher the level the more letters you will have to guess before the cat drowns!")
 
     while True:
-        Player.progress = progress_bar[2]
+        player.progress = progress_bar[2]
         # choice of game mode
         print("Please choose a game mode by entering 1 or 2 on your keyboard:\nMystery Word [1]\nor\nMystery Sentence [2]")
 
-        p_mode = input('>> ')
+        p_mode = input('>>\n')
 
-        if input_validation(p_mode):
+        if input_validation(player, p_mode):
             game_mode = settings.choose_mode(p_mode)
             if game_mode:
                 print("Choice saved.")
                 break
 
     while True:
-        Player.progress = progress_bar[3]
+        player.progress = progress_bar[3]
         # choice of game difficulty
         print("Please choose a game difficulty by entering 1, 2 or 3 on your keyboard:\nEasy[1],\nMedium[2],\nHard[3]")
 
-        p_diff = input('>> ')
+        p_diff = input('>>\n')
 
-        if input_validation(p_diff):
+        if input_validation(player, p_diff):
             game_diff = settings.choose_diff(p_diff)
             if game_diff:
                 print("Choice saved.")
                 break
 
-    Player.setting = (settings.game_mode, settings.game_diff)
-    print(f"You are now proceding into a game with these settings: {Player.setting}")
-
-    if settings.game_mode == 'mystery word':
-        hangman_word()
-    elif settings.game_mode == 'mystery sentence':
-        hangman_sentence()
+    player.setting = [settings.game_mode, settings.game_diff]
+    print(f"You are now proceding into a game with these settings: {player.setting}")
 
 
-def hangman_word():
+def hangman_word(player):
     """
     Generates a random word
-    Word length is based on Player.setting
+    Word length is based on player.setting
     """
     mystery_word = ''
 
-    if Player.setting == ('mystery word', 'easy'):
+    if player.setting == ['mystery word', 'easy']:
         mystery_word = wrd.word(word_min_length=3, word_max_length=5).upper()
-    elif Player.setting == ('mystery word', 'medium'):
+    elif player.setting == ['mystery word', 'medium']:
         mystery_word = wrd.word(word_min_length=5, word_max_length=7).upper()
-    elif Player.setting == ('mystery word', 'hard'):
+    elif player.setting == ['mystery word', 'hard']:
         mystery_word = wrd.word(word_min_length=8, word_max_length=12).upper()
 
     return mystery_word
 
 
-def hangman_sentence():
+def hangman_sentence(player):
     """
     Generates a random sentence
-    Sentence complexity is based on Player.setting
+    Sentence complexity is based on player.setting
     """
     mystery_sentence = ''
 
-    if Player.setting == ('mystery sentence', 'easy'):
+    if player.setting == ['mystery sentence', 'easy']:
         mystery_sentence = s.bare_bone_sentence().upper()
-    elif Player.setting == ('mystery sentence', 'medium'):
+    elif player.setting == ['mystery sentence', 'medium']:
         mystery_sentence = s.simple_sentence().upper()
-    elif Player.setting == ('mystery sentence', 'hard'):
+    elif player.setting == ['mystery sentence', 'hard']:
         mystery_sentence = s.sentence().upper()
 
     return mystery_sentence
 
 
-def get_user_guess(mystery):
+def get_user_guess(player):
     """
     Displays state of current mystery word/sentence
 
     Prompts the user's guess only while they have lives/guesses remaining
     Also handles validation of guess input
     """
-    letters = set(mystery)
-    current_mystery = [letter if letter in Player.guesses else '_' for letter in mystery]
+    mystery = None # 
+    if player.setting[0] == 'mystery word':
+        mystery = hangman_word(player)
+    elif player.setting[0] == 'mystery sentence':
+        mystery = hangman_sentence(player)
 
-    while Player.lives_left > 0 and len(letters) > 0:
-        print(drowning_cat[Player.lives_left])
-        print(f"You have {lives_left} lives left.\n")
-        print(f"You have already used these letters: ' '.join(Player.guesses)\n")
+    letters = set(mystery)
+    current_mystery = [letter if letter in player.guesses else '_' for letter in mystery]
+
+    while player.lives_left > 0 and len(letters) > 0:
+        print(drowning_cat[player.lives_left])
+        print(f"You have {player.lives_left} lives left.\n")
+        print(f"You have already used these letters: ' '.join(player.guesses)\n")
         print(f"The cat is anxious...\n{''.join(current_mystery)}")
 
         guess = input("Enter a guess:\n").upper()
         
-        if guess in alphabet - Player.guesses:
-            Player.guesses.add(guess)
+        if guess in alphabet - player.guesses:
+            player.guesses.add(guess)
         elif guess in player.guesses:
             print("You've already guessed this one. \n Try a different letter please")
         else:
@@ -224,9 +230,9 @@ def get_user_guess(mystery):
             letters.remove(guess)
             print("Well done! You found a letter!\n")
         else:
-            Player.lose_life()
+            player.lose_life()
 
-        current_mystery = [letter if letter in Player.guesses else '_' for letter in mystery]
+        current_mystery = [letter if letter in player.guesses else '_' for letter in mystery]
 
         if len(letters) == 0:
             print(victory)
@@ -237,29 +243,29 @@ def get_user_guess(mystery):
             print(f"Your mystery was: {mystery}")
 
 
-def input_validation(value):
+def input_validation(player, value):
     """
     Validation and error handling function
     Checks user inputs based on where we are in the flowchart
-    (using if statements with the progress attribute of the Player class)
+    (using if statements with the progress attribute of the player class)
     """
     # for the yes/no questions
-    if Player.progress in [progress_bar[0], progress_bar[5],
+    if player.progress in [progress_bar[0], progress_bar[5],
                            progress_bar[6], progress_bar[7]]:
         try:
             if value not in answer_yes and value not in answer_no:
-                raise ValueError(f"You must answer yes or no.\nOnly {answer_yes} or {answer_no} are accepted.\nYou entered {value}.")
+                raise ValueError(f"You must answer yes or no.\nYou entered {value}.")
         except ValueError as e:
             print(f"Invalid data: {e}, please try again.\n")
             return False
-    elif Player.progress == progress_bar[2]:    # for the game settings choices
+    elif player.progress in progress_bar[2]:    # for the game settings choices
         try:
             if (value != '1') and (value != '2'):
                 raise ValueError(f"You must enter a number.\nOnly 1 or 2 are accepted.\nYou entered {value}.")
         except ValueError as e:
             print(f"Invalid data: {e}, please try again.\n")
             return False
-    elif Player.progress == progress_bar[3]:
+    elif player.progress in progress_bar[3]:
         try:
             if (value != '1') and (value != '2') and (value != '3'):
                 raise ValueError(f"You must enter a number.\nOnly 1, 2 or 3 are accepted.\nYou entered {value}.")
@@ -273,8 +279,9 @@ def main():
     """
     Runs the entire application
     """
-    roll_intro()
-    game_choice()
+    player = roll_intro()
+    game_choice(player)
+    get_user_guess(player)
 
 
 main()
